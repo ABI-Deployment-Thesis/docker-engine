@@ -11,20 +11,12 @@ def process_message(ch, method, properties, body):
     try:
         message = json.loads(body)
         run_id = message["run_id"]
+        model_type = message["type"]
         folder_path = message["folder_path"]
-        model_filename = message["model_filename"]
-        input_features = message["input_features"]
+        model_filename = message.get("model_filename")
+        input_features = message.get("input_features")
 
         grpc.update_running_state("building", run_id)
-
-        try:
-            _, container = docker.build_and_run_container(
-                run_id, folder_path, model_filename, input_features
-            )
-            grpc.update_running_state("running", run_id, container.id)
-        except Exception as e:
-            grpc.update_running_state("failed", run_id)
-            logger.error("Container build/run failed:", str(e))
 
     except json.JSONDecodeError as e:
         logger.error("JSON decoding failed:", str(e))
@@ -34,3 +26,17 @@ def process_message(ch, method, properties, body):
         logger.error("Unexpected error:", str(e))
     finally:
         ch.basic_ack(delivery_tag=method.delivery_tag)
+
+    try:
+        # ACK needs to be sent first, otherwise if the build takes too long, the RabbitMQ connection will be broken
+        _, container = docker.build_and_run_container(
+            run_id, model_type, folder_path, model_filename, input_features
+        )
+        grpc.update_running_state("running", run_id, container.id)
+    except Exception as e:
+        grpc.update_running_state(
+            state="failed",
+            run_id=run_id,
+            logs=f"Container build/run failed: {e.args[0]}",
+        )
+        logger.error("Container build/run failed:", str(e))
