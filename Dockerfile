@@ -1,17 +1,12 @@
-# Use an official Python runtime as a parent image
-FROM python:3.9-slim
+# 3.12.5-alpine3.20
+FROM python@sha256:c2f41e6a5a67bc39b95be3988dd19fbd05d1b82375c46d9826c592cca014d4de
 
-# Set the working directory in the container
 WORKDIR /usr/src/app
 
-# Copy the requirements file into the container at /usr/src/app
 COPY requirements.txt .
 
-# Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the current directory contents into the container at /usr/src/app
 COPY . .
 
-# Run main.py when the container launches
 CMD ["python", "-u", "main.py"]

@@ -1,6 +1,7 @@
+import grpc
+
 import client.protos.ModelRunnerService_pb2 as model_pb2
 import client.protos.ModelRunnerService_pb2_grpc as model_pb2_grpc
-import grpc
 from config import GRPC_MODEL_RUNNER_HOST
 
 

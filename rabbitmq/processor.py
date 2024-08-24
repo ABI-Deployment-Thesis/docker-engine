@@ -1,10 +1,7 @@
 import json
-import logging
 
 import client.docker as docker
 import client.grpc as grpc
-
-logger = logging.getLogger(__name__)
 
 
 def process_message(ch, method, properties, body):

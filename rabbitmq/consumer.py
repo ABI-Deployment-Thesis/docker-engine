@@ -1,4 +1,5 @@
 import pika
+
 from config import RABBITMQ_HOST, RABBITMQ_QUEUE
 
 
