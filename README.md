@@ -34,6 +34,16 @@ For a detailed explanation of the proposed architecture and its deployment strat
 - Both
     - Communicates with the Docker daemon to build and retrieve information about images.
 
+## Development
+
+```sh
+# Generate gRPC client and server code
+python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./client/protos/ModelRunnerService.proto
+
+# Start RabbitMQ
+docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:management-alpine
+```
+
 ## Author
 
 - Rui Gomes ([LinkedIn](https://www.linkedin.com/in/ruigomes99))
