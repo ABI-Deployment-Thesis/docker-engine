@@ -1,5 +1,4 @@
 import threading
-import time
 
 import rabbitmq.consumer
 import rabbitmq.processor
@@ -7,8 +6,6 @@ from utils.container_checker import check_containers_state
 
 
 def main():
-    time.sleep(30)
-
     status_thread = threading.Thread(target=check_containers_state)
     status_thread.daemon = True
     status_thread.start()
