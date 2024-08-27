@@ -20,7 +20,7 @@ def check_containers_state():
                             f"Container {container.id} finished with exit code {exit_code}"
                         )
                         grpc.update_running_state(
-                            "finished",
+                            "finished" if exit_code == 0 else "failed",
                             container.name.split("_")[1],
                             container.id,
                             exit_code=exit_code,
