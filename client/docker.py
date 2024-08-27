@@ -11,6 +11,8 @@ def build_and_run_container(
     dockerfile_path,
     model_file,
     input_features,
+    mem_limit,
+    nano_cpus,
     custom_tag="docker-engine",
 ):
     image, _ = client.images.build(path=dockerfile_path, tag=custom_tag)
@@ -27,6 +29,8 @@ def build_and_run_container(
         custom_tag,
         name=container_name,
         command=command,
+        mem_limit=mem_limit,  # Set memory limit (e.g., '256M' for 256MB)
+        nano_cpus=nano_cpus,  # Set nano CPUs (e.g., 500000000 for 50% of a single CPU)
         detach=True,
         auto_remove=False,
     )
