@@ -14,7 +14,7 @@
 
 <h2 align="center">ABI Deployment Thesis - Docker Engine</h2>
 
-Welcome to the docker-engine repository! This project is a key part of a master's thesis at the University of Minho. It's a Proof of Concept for a proposed architecture designed to deploy and integrate intelligent models within ABI (Adaptive Business Intelligence) systems.
+Welcome to the docker-engine repository! This project is a key part of a master's thesis at the University of Minho. It's a Proof of Concept for a proposed architecture designed to deploy and integrate intelligent models within Adaptive Business Intelligence (ABI) systems.
 
 **This repository provides a microservice for running intelligent models through the Docker daemon.**
 
