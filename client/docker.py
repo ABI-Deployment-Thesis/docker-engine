@@ -17,14 +17,14 @@ def build_and_run_container(
     custom_tag="docker-engine",
 ):
     image, _ = client.images.build(path=dockerfile_path, tag=custom_tag)
-    print(f"Image built with id {image.id} and tags {image.tags}")
+    print(f"run_id={run_id}: Image built with id {image.id} and tags {image.tags}")
 
     container_name = f"{CONTAINER_PREFIX}{run_id}"
 
     command = None
     if model_type == "predictive":
         command = ["--model_file", model_file, "--input_features", input_features]
-        print(f"Running command: {command}")
+        print(f"run_id={run_id}: Running command: {command}")
 
     container = client.containers.run(
         custom_tag,
@@ -36,5 +36,7 @@ def build_and_run_container(
         detach=True,
         auto_remove=False,
     )
-    print(f"Container started with id {container.id} and name {container.name}")
+    print(
+        f"run_id={run_id}: Container started with id {container.id} and name {container.name}"
+    )
     return image, container
